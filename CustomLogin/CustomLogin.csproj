@@ -880,6 +880,7 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Home\_login.cshtml" />
     <Content Include="Views\Home\_register.cshtml" />
+    <Content Include="Views\Home\Role.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
