@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WebDevTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dogie_Role_tbl">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dogie_user_tbl">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="128" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdBy" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_user_role">
+          <End Role="dogie_Role_tbl" Type="Self.dogie_Role_tbl" Multiplicity="1" />
+          <End Role="Dogie_user_tbl" Type="Self.Dogie_user_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dogie_Role_tbl">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="Dogie_user_tbl">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebDevTestModelStoreContainer">
+          <EntitySet Name="dogie_Role_tbl" EntityType="Self.dogie_Role_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dogie_user_tbl" EntityType="Self.Dogie_user_tbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="dogie_Role_tbl" EntitySet="dogie_Role_tbl" />
+            <End Role="Dogie_user_tbl" EntitySet="Dogie_user_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebDevTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dogie_Role_tbl">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Dogie_user_tbl" Relationship="Self.FK_user_role" FromRole="dogie_Role_tbl" ToRole="Dogie_user_tbl" />
+        </EntityType>
+        <EntityType Name="Dogie_user_tbl">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="128" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdBy" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="dogie_Role_tbl" Relationship="Self.FK_user_role" FromRole="Dogie_user_tbl" ToRole="dogie_Role_tbl" />
+        </EntityType>
+        <Association Name="FK_user_role">
+          <End Role="dogie_Role_tbl" Type="Self.dogie_Role_tbl" Multiplicity="1" />
+          <End Role="Dogie_user_tbl" Type="Self.Dogie_user_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dogie_Role_tbl">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="Dogie_user_tbl">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebDevTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dogie_Role_tbl" EntityType="Self.dogie_Role_tbl" />
+          <EntitySet Name="Dogie_user_tbl" EntityType="Self.Dogie_user_tbl" />
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="dogie_Role_tbl" EntitySet="dogie_Role_tbl" />
+            <End Role="Dogie_user_tbl" EntitySet="Dogie_user_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebDevTestModelStoreContainer" CdmEntityContainer="WebDevTestEntities">
+          <EntitySetMapping Name="dogie_Role_tbl">
+            <EntityTypeMapping TypeName="WebDevTestModel.dogie_Role_tbl">
+              <MappingFragment StoreEntitySet="dogie_Role_tbl">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dogie_user_tbl">
+            <EntityTypeMapping TypeName="WebDevTestModel.Dogie_user_tbl">
+              <MappingFragment StoreEntitySet="Dogie_user_tbl">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
